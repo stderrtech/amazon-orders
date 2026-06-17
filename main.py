@@ -229,20 +229,15 @@ def main():
         transactions = []
 
     for tx in transactions:
+        if not getattr(tx, "is_refund", False):
+            continue
+
         grand_total = getattr(tx, "grand_total", None)
         if grand_total is None:
             continue
 
-        try:
-            amount = float(str(grand_total).replace("$", "").replace(",", "").strip())
-        except ValueError:
-            continue
-
-        if amount >= 0:
-            continue  # only process refunds (negative amounts)
-
         order_id = getattr(tx, "order_number", "") or ""
-        refund_amount = f"{abs(amount):.2f}"
+        refund_amount = f"{abs(grand_total):.2f}"
         tx_date = format_date(getattr(tx, "completed_date", None))
 
         if order_id in digital_order_ids:
