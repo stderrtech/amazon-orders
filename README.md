@@ -43,7 +43,7 @@ cp .env.example .env
 ## Usage
 
 ```bash
-uv run python download_amazon_orders.py
+uv run python main.py
 ```
 
 The script logs in, fetches orders year by year with full details, then fetches transactions for the same date range. Progress is printed to stdout. When complete it writes `amazon_orders_YYYYMMDD.zip` in the project directory.
